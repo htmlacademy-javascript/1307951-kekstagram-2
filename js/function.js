@@ -1,20 +1,23 @@
 
 /* Задание 1*/
-function checkStringLength(charArray, length){
+function checkStringLength(myString = '', length = 1) {
   try {
-    return (charArray.length < length);
+    return (myString.length < length);
   } catch(exc){
     // console.error('not string');
   }
 }
 
+const checkStringLength2 = (myString = '', length = 1) => myString.length < length;
+
 checkStringLength('проверяемая строка', 20);
+checkStringLength2('проверяемая строка', 20);
 // console.log(`Ожидаю true, получаю - ${checkStringLength('проверяемая строка', 20)}`);
 // console.log(`Ожидаю true, получаю - ${checkStringLength('проверяемая строка', 18)}`);
 // console.log(`Ожидаю false, получаю - ${checkStringLength('проверяемая строка', 10)}`);
 
 /* Задание 2*/
-function isPolyndrome(exampleString) {
+function isPolyndrome(exampleString = '') {
   try {
     const originalString = exampleString.replaceAll(' ', '').toLowerCase();
     let reverseString = '';
@@ -33,7 +36,7 @@ isPolyndrome('Лёша на полке клопа нашёл ');
 // console.log(`Ожидаю true, получаю - ${isPolyndrome('Лёша на полке клопа нашёл ')}`);
 
 /* Задание 3*/
-function getNumber(yourString) {
+function getNumber(yourString = '') {
   let number = '';
   let str = '';
 

@@ -4,13 +4,14 @@ function checkStringLength(charArray, length){
   try {
     return (charArray.length < length);
   } catch(exc){
-    console.error('not string');
+    // console.error('not string');
   }
 }
 
-console.log(`Ожидаю true, получаю - ${checkStringLength('проверяемая строка', 20)}`);
-console.log(`Ожидаю true, получаю - ${checkStringLength('проверяемая строка', 18)}`);
-console.log(`Ожидаю false, получаю - ${checkStringLength('проверяемая строка', 10)}`);
+checkStringLength('проверяемая строка', 20);
+// console.log(`Ожидаю true, получаю - ${checkStringLength('проверяемая строка', 20)}`);
+// console.log(`Ожидаю true, получаю - ${checkStringLength('проверяемая строка', 18)}`);
+// console.log(`Ожидаю false, получаю - ${checkStringLength('проверяемая строка', 10)}`);
 
 /* Задание 2*/
 function isPolyndrome(exampleString) {
@@ -23,12 +24,13 @@ function isPolyndrome(exampleString) {
     }
 
     return (reverseString === originalString);
-  } catch (error) {
-    console.error('что-то пошло не так... проверьте, строку ль ввели?');
+  } catch (e) {
+    // console.error('что-то пошло не так... проверьте, строку ль ввели?');
   }
 }
 
-console.log(`Ожидаю true, получаю - ${isPolyndrome('Лёша на полке клопа нашёл ')}`);
+isPolyndrome('Лёша на полке клопа нашёл ');
+// console.log(`Ожидаю true, получаю - ${isPolyndrome('Лёша на полке клопа нашёл ')}`);
 
 /* Задание 3*/
 function getNumber(yourString) {
@@ -44,7 +46,7 @@ function getNumber(yourString) {
       throw new Error('нужна или строка, или число, а я получил что-то другое');
     }
   } catch (e) {
-    console.error(e.message);
+    // console.error(e.message);
   }
 
   for (let i = 0; i < str.length; i++){
@@ -58,11 +60,12 @@ function getNumber(yourString) {
   return !number.length ? number : parseInt(number, 10);
 }
 
-console.log(`Ожидаю число 2023, получаю - ${getNumber('2023 год')}`);
-console.log(`Ожидаю число 2022, получаю - ${getNumber('ECMAScript 2022')}`);
-console.log(`Ожидаю число 105, получаю - ${getNumber('1 кефир, 0.5 батона')}`);
-console.log(`Ожидаю число 7, получаю - ${getNumber('агент 007')}`);
-console.log(`Не ожидаю числа, получаю  - ${getNumber('а я томат')}`);
-console.log(`Ожидаю число 2023, получаю - ${getNumber(2023)}`);
-console.log(`Ожидаю число 1, получаю - ${getNumber(-1)}`);
-console.log(`Ожидаю число 15, получаю - ${getNumber(1.5)}`);
+getNumber('2023 год');
+// console.log(`Ожидаю число 2023, получаю - ${getNumber('2023 год')}`);
+// console.log(`Ожидаю число 2022, получаю - ${getNumber('ECMAScript 2022')}`);
+// console.log(`Ожидаю число 105, получаю - ${getNumber('1 кефир, 0.5 батона')}`);
+// console.log(`Ожидаю число 7, получаю - ${getNumber('агент 007')}`);
+// console.log(`Не ожидаю числа, получаю  - ${getNumber('а я томат')}`);
+// console.log(`Ожидаю число 2023, получаю - ${getNumber(2023)}`);
+// console.log(`Ожидаю число 1, получаю - ${getNumber(-1)}`);
+// console.log(`Ожидаю число 15, получаю - ${getNumber(1.5)}`);

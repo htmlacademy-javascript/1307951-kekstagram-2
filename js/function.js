@@ -72,3 +72,30 @@ getNumber('2023 год');
 // console.log(`Ожидаю число 2023, получаю - ${getNumber(2023)}`);
 // console.log(`Ожидаю число 1, получаю - ${getNumber(-1)}`);
 // console.log(`Ожидаю число 15, получаю - ${getNumber(1.5)}`);
+
+/**
+ * считаем минуты
+*/
+
+function getMinutesFromTimeString(timeString) {
+  const parts = timeString.split(':');
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+
+  return (hours * 60) + minutes;
+}
+
+function isWorkHoursMeeting (dayStart, dayEnd, meetingStart, meetingDuration) {
+  const startDay = getMinutesFromTimeString(dayStart);
+  const endDay = getMinutesFromTimeString(dayEnd);
+  const startMeeting = getMinutesFromTimeString(meetingStart);
+  const endMeeting = startMeeting + meetingDuration;
+
+  return (startDay <= startMeeting && endDay >= endMeeting);
+}
+
+console.log(isWorkHoursMeeting('08:00', '17:30', '14:00', 90));
+console.log(isWorkHoursMeeting('8:0', '10:0', '8:0', 120));
+console.log(isWorkHoursMeeting('08:00', '14:30', '14:00', 90));
+console.log(isWorkHoursMeeting('14:00', '17:30', '08:0', 90));
+console.log(isWorkHoursMeeting('8:00', '17:30', '08:00', 900));

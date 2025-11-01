@@ -5,4 +5,4 @@ const photoData = getPhotoArray();
 
 // console.log(photoData);
 
-renderThumbnails(photoData, photoData.length);
+renderThumbnails(photoData);

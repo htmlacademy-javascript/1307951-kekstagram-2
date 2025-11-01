@@ -3,28 +3,17 @@ const pictureTemplate = pictureTemplateFragment.querySelector('.picture');
 const fragment = document.createDocumentFragment();
 const placeInPicturesElement = document.querySelector('.pictures');
 
+const renderThumbnails = (pictureData) => {
 
-const fillInPhotoDataElement = (({_, url, description, likes, comments}, element) => {
-  const img = element.querySelector('.picture__img');
-  img.src = url;
-  img.alt = description;
-  element.querySelector('.picture__likes').textContent = likes;
-  element.querySelector('.picture__comments').textContent = comments.length;
-
-  return element;
-});
-
-const renderThumbnails = (pictureObjects, pictureLimits = 0) => {
-
-  if (pictureLimits) {
-    for (let i = 0; i < pictureLimits; i++) {
-      const photoElement = pictureTemplate.cloneNode(true);
-      fragment.append(fillInPhotoDataElement(pictureObjects[i], photoElement));
-    }
-  }
-
+  pictureData.forEach(({_, url, description, likes, comments}) => {
+    const photoElement = pictureTemplate.cloneNode(true);
+    photoElement.querySelector('.picture__img').src = url;
+    photoElement.querySelector('.picture__img').alt = description;
+    photoElement.querySelector('.picture__likes').textContent = likes;
+    photoElement.querySelector('.picture__comments').textContent = comments.length;
+    fragment.append(photoElement);
+  });
   placeInPicturesElement.append(fragment);
-
 };
 
 export {renderThumbnails};

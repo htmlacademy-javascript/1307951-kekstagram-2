@@ -1,6 +1,7 @@
 import {NAME_ARRAY, PHOTO_DESCRIPTION, MESSAGE_ARRAY,NUMBER_OF_PHOTO_OBJECTS} from './data.js';
 import {getRandomInt, getUniqueRandomHelper} from './utils.js';
 
+let photoData;
 /** возвращает случайное имя из массиво @returns {string} (можно повторять)*/
 function getRandomName(){
   return NAME_ARRAY[getRandomInt(0, NAME_ARRAY.length - 1)];
@@ -52,7 +53,12 @@ function getPhotoObject(index) {
 }
 
 function getPhotoArray () {
-  return Array.from({length: NUMBER_OF_PHOTO_OBJECTS}, (element, index) => getPhotoObject(index));
+  photoData = Array.from({length: NUMBER_OF_PHOTO_OBJECTS}, (element, index) => getPhotoObject(index));
+  return photoData;
 }
 
+/** создать большие фотки */
+
+
 export {getPhotoArray};
+export{photoData};

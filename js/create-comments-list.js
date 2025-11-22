@@ -13,7 +13,7 @@ const socialCommentsLoader = bigPictureElement.querySelector('.social__comments-
 // фрагмент, куда добавляются комментарии загруженные
 const socialCommentFragment = document.createDocumentFragment();
 
-let some = 0;
+let getNewComments = 0;
 /** в этой функции передается обрезанный массив объектов
  * длиной shwo_step
  */
@@ -57,7 +57,7 @@ function addCommentAssistent(allCommentsArray) {
 
 function addMoreComments (evt) {
   evt.preventDefault();
-  some();
+  getNewComments();
 }
 
 function clearCommentsEvent () {
@@ -84,7 +84,7 @@ function createCommentList(comments) {
     } else {
       socialCommentShownCountElement.textContent = SHOW_STEP;
       socialCommentsElement.appendChild(createCommentListFragment(comments.slice(0, SHOW_STEP)));
-      some = addCommentAssistent(comments);
+      getNewComments = addCommentAssistent(comments);
       // добавляем обработчик событий к кнопке
       addCommentsEvent();
       socialCommentsLoader.classList.remove('hidden');

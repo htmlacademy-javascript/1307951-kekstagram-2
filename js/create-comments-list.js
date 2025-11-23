@@ -37,8 +37,7 @@ function addCommentAssistent(allCommentsArray) {
 
   // по умолчанию в эту функцию идут массивы длинной больше 5
   // поэтому проверять не надо
-
-  function loadNewCommens() {
+  return function () {
     const difference = commentsArrayLength - loadedComments;
     if ((difference / SHOW_STEP) >= 1) {
       socialCommentsElement.appendChild(createCommentListFragment(allComments.slice(loadedComments, loadedComments + SHOW_STEP)));
@@ -51,8 +50,7 @@ function addCommentAssistent(allCommentsArray) {
       socialCommentsLoader.classList.add('hidden');
     }
     socialCommentShownCountElement.textContent = loadedComments;
-  }
-  return loadNewCommens;
+  };
 }
 
 function addMoreComments (evt) {

@@ -5,8 +5,9 @@ const placeInPicturesElement = document.querySelector('.pictures');
 
 const renderThumbnails = (pictureData) => {
 
-  pictureData.forEach(({_, url, description, likes, comments}) => {
+  pictureData.forEach(({id, url, description, likes, comments}) => {
     const photoElement = pictureTemplate.cloneNode(true);
+    photoElement.dataset.pictureId = id;
     photoElement.querySelector('.picture__img').src = url;
     photoElement.querySelector('.picture__img').alt = description;
     photoElement.querySelector('.picture__likes').textContent = likes;

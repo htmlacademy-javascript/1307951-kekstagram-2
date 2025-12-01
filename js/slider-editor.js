@@ -1,0 +1,6 @@
+const initSliderEditor = () => {
+
+};
+
+
+export {initSliderEditor};

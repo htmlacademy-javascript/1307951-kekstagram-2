@@ -6,7 +6,7 @@ const isDescriptionValid = (descriptionString) => {
   errorMessage = '';
   const descr = descriptionString.trim();
   if(descr.length > DESCRIPTION_MAX_LENGTH) {
-    errorMessage = 'длина комментария не может составлять больше 140 символов.';
+    errorMessage = `длина комментария не может составлять больше ${DESCRIPTION_MAX_LENGTH} символов.`;
     return false;
   }
   return true;

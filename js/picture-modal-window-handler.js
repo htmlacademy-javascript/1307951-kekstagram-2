@@ -18,8 +18,8 @@ function onBigPictureClose(evt) {
 }
 
 function onBigPictureOpen(evt) {
-  evt.preventDefault();
   if (evt.target.classList.contains('picture__img')) {
+    evt.preventDefault();
     const currentPictureNode = evt.target.closest('.pictures');
     const smallPictureId = evt.target.parentElement.dataset.pictureId;
 

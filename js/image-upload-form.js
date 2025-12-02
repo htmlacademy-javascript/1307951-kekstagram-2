@@ -1,48 +1,46 @@
 import {isHashtagValid, error} from './check-hashtag-input.js';
 import { isDescriptionValid, error as descError } from './check-description-input.js';
 import { isEscapeKey, isEnter } from './utils.js';
-// import { initSliderEditor } from './slider-editor.js';
+import { initSliderEditor } from './slider-editor.js';
 
 const IMG_SCALE_STEP = 25;
 
 const bodyElement = document.querySelector('body');
-const imgUploadForm = document.querySelector('.img-upload__form');
-const imgUploadInput = imgUploadForm.querySelector('.img-upload__input');
-const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
-const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
-// const imgUploadSubmit = imgUploadForm.querySelector('.img-upload__submit');
-// const textHashtags = imgUploadForm.querySelector('.text__hashtags');
+const imgUploadFormElement = document.querySelector('.img-upload__form');
+const imgUploadInputElement = imgUploadFormElement.querySelector('.img-upload__input');
+const imgUploadOverlayElement = imgUploadFormElement.querySelector('.img-upload__overlay');
+const imgUploadCancelElement = imgUploadFormElement.querySelector('.img-upload__cancel');
 
 // pristine
-const imgUploadFieldWrapperHash = imgUploadForm.querySelector('.img-upload__field-wrapper:has(.text__hashtags)');
-const textHashtagsInput = imgUploadForm.querySelector('.text__hashtags');
-const imgUploadFieldWrapperDesc = imgUploadForm.querySelector('.img-upload__field-wrapper:has(.text__description)');
-const textDescription = imgUploadForm.querySelector('.text__description');
+const imgUploadFieldWrapperHashElement = imgUploadFormElement.querySelector('.img-upload__field-wrapper:has(.text__hashtags)');
+const textHashtagsInputElement = imgUploadFormElement.querySelector('.text__hashtags');
+const imgUploadFieldWrapperDescElement = imgUploadFormElement.querySelector('.img-upload__field-wrapper:has(.text__description)');
+const textDescriptionElement = imgUploadFormElement.querySelector('.text__description');
 
 // scale
-const scaleControleSmaller = imgUploadForm.querySelector('.scale__control--smaller');
-const scaleControleBigger = imgUploadForm.querySelector('.scale__control--bigger');
-const scaleControlValue = imgUploadForm.querySelector('.scale__control--value');
-const imgUploadPreviewImg = imgUploadForm.querySelector('.img-upload__preview img');
+const scaleControleSmallerElement = imgUploadFormElement.querySelector('.scale__control--smaller');
+const scaleControleBiggerElement = imgUploadFormElement.querySelector('.scale__control--bigger');
+const scaleControlValueElement = imgUploadFormElement.querySelector('.scale__control--value');
+const imgUploadPreviewImgElement = imgUploadFormElement.querySelector('.img-upload__preview img');
 
 // видимость окна редактирования фото
 function changePhotoEditingWindowVisibility() {
-  imgUploadOverlay.classList.toggle('hidden');
+  imgUploadOverlayElement.classList.toggle('hidden');
   bodyElement.classList.toggle('modal-open');
 }
 
 function resetFromEditor() {
   changePhotoEditingWindowVisibility();
-  imgUploadForm.reset();
-  imgUploadCancel.removeEventListener('pointerdown', onImgUploadFileClose);
+  imgUploadFormElement.reset();
+  imgUploadCancelElement.removeEventListener('pointerdown', onImgUploadFileClose);
   document.removeEventListener('keydown', onDocumentKeydown);
-  // textHashtagsInput.removeEventListener('input', isHashtagValid);
+  // textHashtagsInputElement.removeEventListener('input', isHashtagValid);
 }
 
 function onImgUploadFileOpen(evt) {
   if (evt.target.value) {
     changePhotoEditingWindowVisibility();
-    imgUploadCancel.addEventListener('pointerdown', onImgUploadFileClose);
+    imgUploadCancelElement.addEventListener('pointerdown', onImgUploadFileClose);
     document.addEventListener('keydown', onDocumentKeydown);
   }
 }
@@ -59,7 +57,7 @@ function onDocumentKeydown(evt) {
   if(isEscapeKey(evt)) {
     evt.preventDefault();
     // если фокус на инпутах
-    if(document.activeElement === textHashtagsInput || document.activeElement === textDescription) {
+    if(document.activeElement === textHashtagsInputElement || document.activeElement === textDescriptionElement) {
       evt.stopPropagation();
     } else {
       resetFromEditor();
@@ -68,7 +66,7 @@ function onDocumentKeydown(evt) {
 
   if(isEnter(evt)) {
     evt.preventDefault();
-    if(document.activeElement === imgUploadCancel) {
+    if(document.activeElement === imgUploadCancelElement) {
       resetFromEditor();
     }
   }
@@ -78,15 +76,15 @@ function onFormSubmit(pristineArray, evt) {
   evt.preventDefault();
   const isAnyError = pristineArray.every((pristine) => pristine.validate());
   if (isAnyError) {
-    textHashtagsInput.value = textHashtagsInput.value.trim().replaceAll(/\s+/g);
-    textDescription.value = textDescription.value.trim();
-    imgUploadForm.submit();
+    textHashtagsInputElement.value = textHashtagsInputElement.value.trim();
+    textDescriptionElement.value = textDescriptionElement.value.trim();
+    imgUploadFormElement.submit();
   }
 }
 
 function onChangeScaleControlValue(evt) {
   try {
-    let currentValue = parseInt(scaleControlValue.value, 10);
+    let currentValue = parseInt(scaleControlValueElement.value, 10);
 
     if (evt.target.classList.contains('scale__control--smaller')) {
       currentValue -= IMG_SCALE_STEP;
@@ -98,8 +96,8 @@ function onChangeScaleControlValue(evt) {
       currentValue = currentValue > 100 ? 100 : currentValue;
     }
 
-    scaleControlValue.setAttribute('value', `${currentValue}%`);
-    imgUploadPreviewImg.setAttribute('style', `transform: scale(${currentValue / 100});`);
+    scaleControlValueElement.setAttribute('value', `${currentValue}%`);
+    imgUploadPreviewImgElement.setAttribute('style', `transform: scale(${currentValue / 100});`);
     //throw new Error('Неверный формат числа');
 
   } catch (err) {
@@ -120,16 +118,16 @@ function initPristineFormValidation() {
   // валидация формы хэш-тега
   // создаем объект пристин и вешаем его на элемент, где будут ошибки,
   // т.е. на wrapper
-  const pristineHashTag = new Pristine(imgUploadFieldWrapperHash, defaultConfig);
+  const pristineHashTag = new Pristine(imgUploadFieldWrapperHashElement, defaultConfig);
   // добавляем валидатор {поле, где валидировать, обработчик, ошибка, приоритет, убрать обработчик или нет}
   // ошибка срабатывает, когда обработчик ее находит и возвращает false
-  pristineHashTag.addValidator(textHashtagsInput, isHashtagValid, error, 1, false);
+  pristineHashTag.addValidator(textHashtagsInputElement, isHashtagValid, error, 1, false);
 
-  const pristineDescription = new Pristine(imgUploadFieldWrapperDesc, defaultConfig);
-  pristineDescription.addValidator(textDescription, isDescriptionValid, descError, 1 , false);
+  const pristineDescription = new Pristine(imgUploadFieldWrapperDescElement, defaultConfig);
+  pristineDescription.addValidator(textDescriptionElement, isDescriptionValid, descError, 1 , false);
 
   // добавляем событие закрытия формы с учетом проверки pristine
-  imgUploadForm.addEventListener('submit', (evt) => {
+  imgUploadFormElement.addEventListener('submit', (evt) => {
     onFormSubmit([pristineHashTag, pristineDescription], evt);
   });
 }
@@ -140,11 +138,11 @@ function initPristineFormValidation() {
  */
 const initUploadFormHandler = () => {
   // загрузили файл с фото
-  imgUploadInput.addEventListener('change', onImgUploadFileOpen);
-  scaleControleSmaller.addEventListener('pointerdown', onChangeScaleControlValue);
-  scaleControleBigger.addEventListener('pointerdown', onChangeScaleControlValue);
+  imgUploadInputElement.addEventListener('change', onImgUploadFileOpen);
+  scaleControleSmallerElement.addEventListener('pointerdown', onChangeScaleControlValue);
+  scaleControleBiggerElement.addEventListener('pointerdown', onChangeScaleControlValue);
   initPristineFormValidation();
-  // initSliderEditor();
+  initSliderEditor();
 };
 
 export { initUploadFormHandler };

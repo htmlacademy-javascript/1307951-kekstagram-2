@@ -20,7 +20,7 @@ const checkHashTagRules = (inputHashtag) => {
       error: 'Строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д. Разделяйте хэштеги пробелами.'
     },
     {
-      check: inputHashtag.length > 20,
+      check: inputHashtag.length > MAX_HASHTAG_LENGTH,
       error: `Максимальная длина одного хэштега ${MAX_HASHTAG_LENGTH} символов, включая решётку`,
     },
   ];

@@ -30,5 +30,7 @@ const getUniqueRandomHelper = (min = 0, max = 1000) => {
   };
 };
 
+const isEscapeKey = (evt) => evt.type === 'keydown' && evt.key === 'Escape';
+const isEnter = (evt) => evt.type === 'keydown' && evt.key === 'Enter';
 
-export {getRandomInt, getUniqueRandomHelper};
+export {getRandomInt, getUniqueRandomHelper, isEscapeKey, isEnter};

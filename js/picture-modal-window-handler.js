@@ -1,6 +1,6 @@
-import {renderPhotoCard, beforeClosePhotoCard} from './create-full-size-photo-card.js';
+import { renderPhotoCard, beforeClosePhotoCard } from './create-full-size-photo-card.js';
 import { photoData } from './get-photo-data.js';
-import { clearCommentsEvent} from './create-comments-list.js';
+import { clearCommentsEvent } from './create-comments-list.js';
 
 const thumbnailsParentElement = document.querySelector('.pictures');
 const bigPictureElement = document.querySelector('.big-picture');
@@ -19,20 +19,23 @@ function onBigPictureClose(evt) {
 
 function onBigPictureOpen(evt) {
   evt.preventDefault();
-  const currentPictureNode = evt.target.closest('.pictures');
-  const smallPictureId = evt.target.parentElement.dataset.pictureId;
+  if (evt.target.classList.contains('picture__img')) {
+    const currentPictureNode = evt.target.closest('.pictures');
+    const smallPictureId = evt.target.parentElement.dataset.pictureId;
 
-  if (currentPictureNode) {
-    const clickedThumbnail = photoData.find((item) => item.id === Number(smallPictureId));
-    renderPhotoCard(clickedThumbnail);
+    if (currentPictureNode) {
+      const clickedThumbnail = photoData.find((item) => item.id === Number(smallPictureId));
+      renderPhotoCard(clickedThumbnail);
+    }
+
+    document.addEventListener('keydown', onBigPictureClose);
+    closeButtonElement.addEventListener('pointerdown', onBigPictureClose);
   }
 
-  document.addEventListener('keydown', onBigPictureClose);
-  closeButtonElement.addEventListener('pointerdown', onBigPictureClose);
 }
 
-function setPictureModalWindowHandler () {
+function setPictureModalWindowHandler() {
   thumbnailsParentElement.addEventListener('pointerdown', onBigPictureOpen);
 }
 
-export {setPictureModalWindowHandler};
+export { setPictureModalWindowHandler };

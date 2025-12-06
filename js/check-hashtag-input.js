@@ -35,6 +35,7 @@ const checkHashTagRules = (inputHashtag) => {
 };
 
 const error = () => errorMessage;
+
 /**
  * @param {inputHashTagsArray} массив с хэштегами
  * @return {boolean} true если есть повторения хэштегов
@@ -51,6 +52,7 @@ const checkHashTagsClones = (inputHashTagsArray) => {
  * @returns {boolean} если длина получившегося массива больше 5, то true
  */
 const checkHashTagsNumbers = (inputHashTagsString, search) => search.length ? (inputHashTagsString.split(search).length - 1) > 5 : false;
+
 /**
  * @param {String} inputArray строка ввода формы с хэштегом
  * @returns {Boolean} возвращает true, если ошибок нет, и false - если есть
@@ -61,20 +63,16 @@ const isHashtagValid = (inputArray) => {
 
   if (inputArrayString) {
     const inputHashTagsArray = inputArrayString.split(' ');
-    // если несколько хт
     if (inputHashTagsArray.length > 1) {
-      // проверяем есть ли дубликаты
       if (checkHashTagsClones(inputHashTagsArray)) {
         errorMessage += 'Oдин и тот же хэштег не может быть использован дважды';
         return false;
       }
-      // проверяем количество хэштегов
       if (checkHashTagsNumbers(inputArrayString, '#')) {
         errorMessage += 'Нельзя указать больше пяти хэштегов';
         return false;
       }
     }
-    // проверяем все остальные ошибки
     return inputHashTagsArray.every(checkHashTagRules);
   }
   return true;

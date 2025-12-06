@@ -1,3 +1,6 @@
+// import { getData } from './server.js';
+// import { showErrorMessage } from './utils.js';
+
 const NAME_ARRAY = ['Артем', 'Михаил', 'Елена', 'Кира', 'Ольга', 'Александр', 'Игорь', 'Роман', 'Мия', 'Рамзан'];
 
 const PHOTO_DESCRIPTION = ['Городская улица с пешеходами в дождливый день.',
@@ -36,4 +39,12 @@ const MESSAGE_ARRAY = ['Всё отлично!',
 
 const NUMBER_OF_PHOTO_OBJECTS = 25;
 
+const data = {};
+const savePhotos = (photos) => {
+  data.photos = photos;
+};
+
+const getPhotos = () => data.photos;
+
 export{NAME_ARRAY, PHOTO_DESCRIPTION, MESSAGE_ARRAY,NUMBER_OF_PHOTO_OBJECTS};
+export{ savePhotos, getPhotos};

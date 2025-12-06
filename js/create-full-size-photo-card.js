@@ -25,8 +25,6 @@ const beforeClosePhotoCard = () => {
 const renderPhotoCard = (picture) => {
   createPhotoCard(picture);
   bigPictureElement.classList.remove('hidden');
-  // socialCommentCountElement.classList.add('hidden');
-  // socialCommentLoaderElement.classList.add('hidden');
   bodyElement.classList.add('modal-open');
 };
 

@@ -18,7 +18,7 @@ let getNewComments = 0;
  * длиной shwo_step
  */
 
-function createCommentListFragment(comments) {
+const createCommentListFragment = (comments) => {
   comments.forEach(({id: commentId, avatar, message, name}) => {
     const commentElement = socialCommentTemplate.cloneNode(true);
     commentElement.dataset.commentId = commentId;
@@ -28,16 +28,23 @@ function createCommentListFragment(comments) {
     socialCommentFragment.append(commentElement);
   });
   return socialCommentFragment;
-}
-// обновляем массив
-function addCommentAssistent(allCommentsArray) {
+};
+
+const addMoreComments = (evt) => {
+  evt.preventDefault();
+  getNewComments();
+};
+
+const clearCommentsEvent = () => {
+  socialCommentsLoader.removeEventListener('pointerdown', addMoreComments);
+};
+
+const addCommentAssistent = (allCommentsArray) => {
   const allComments = allCommentsArray;
   const commentsArrayLength = allComments.length;
   let loadedComments = SHOW_STEP;
 
-  // по умолчанию в эту функцию идут массивы длинной больше 5
-  // поэтому проверять не надо
-  return function () {
+  return () => {
     const difference = commentsArrayLength - loadedComments;
     if ((difference / SHOW_STEP) >= 1) {
       socialCommentsElement.appendChild(createCommentListFragment(allComments.slice(loadedComments, loadedComments + SHOW_STEP)));
@@ -45,28 +52,19 @@ function addCommentAssistent(allCommentsArray) {
     } else {
       socialCommentsElement.appendChild(createCommentListFragment(allComments.slice(-difference)));
       loadedComments += difference;
-      // socialCommentsLoader.removeEventListener('pointerdown', addMoreComments);
       clearCommentsEvent();
       socialCommentsLoader.classList.add('hidden');
     }
     socialCommentShownCountElement.textContent = loadedComments;
   };
-}
+};
 
-function addMoreComments (evt) {
-  evt.preventDefault();
-  getNewComments();
-}
 
-function clearCommentsEvent () {
-  socialCommentsLoader.removeEventListener('pointerdown', addMoreComments);
-}
-function addCommentsEvent() {
+const addCommentsEvent = () =>{
   socialCommentsLoader.addEventListener('pointerdown', addMoreComments);
-}
+};
 
-// первый раз добавляем элементы
-function createCommentList(comments) {
+const createCommentList = (comments) => {
   socialCommentShownCountElement.textContent = 0;
   socialCommentsElement.querySelectorAll('li').forEach((el) => {
     el.remove();
@@ -77,19 +75,17 @@ function createCommentList(comments) {
     if (comments.length < SHOW_STEP) {
       socialCommentShownCountElement.textContent = comments.length;
       socialCommentsElement.appendChild(createCommentListFragment(comments));
-      // мало комментариев,  поэтому не добавляем обработчик, кнопку показа скрываем
       socialCommentsLoader.classList.add('hidden');
     } else {
       socialCommentShownCountElement.textContent = SHOW_STEP;
       socialCommentsElement.appendChild(createCommentListFragment(comments.slice(0, SHOW_STEP)));
       getNewComments = addCommentAssistent(comments);
-      // добавляем обработчик событий к кнопке
       addCommentsEvent();
       socialCommentsLoader.classList.remove('hidden');
     }
   } else {
     socialCommentsLoader.classList.add('hidden');
   }
-}
+};
 
 export {createCommentList, clearCommentsEvent};

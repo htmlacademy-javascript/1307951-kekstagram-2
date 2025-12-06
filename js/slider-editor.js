@@ -85,6 +85,16 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
+
+const onUpdateSliderOption = (effect) => {
+  sliderElement.noUiSlider.updateOptions(Effects[effect]);
+};
+
+const resetFilter = () => {
+  imageUploadPreviewElement.style.removeProperty('filter');
+  sliderContainerElement.classList.add('hidden');
+};
+
 const onChangeSliderStatus = (evt) => {
   const pressedElement = evt.target;
   if (pressedElement.classList.contains('effects__radio')) {
@@ -99,19 +109,7 @@ const onChangeSliderStatus = (evt) => {
   }
 };
 
-function onUpdateSliderOption (effect) {
-  sliderElement.noUiSlider.updateOptions(Effects[effect]);
-}
-/*
-* обнуляем фильтры на картинке предварительного просмотра
-* при переключении на ОРИГИНАЛ
-*/
-function resetFilter () {
-  imageUploadPreviewElement.style.removeProperty('filter');
-  sliderContainerElement.classList.add('hidden');
-}
-// устанавливаем обработчик на каждый элемент списка (в нем input radio and label)
-function initSliderEditor() {
+const initSliderEditor = () => {
   sliderElement.noUiSlider.on('update', () => {
     effectLevelValueInputElement.value = sliderElement.noUiSlider.get();
     effectsItemsArray.forEach((item) => {
@@ -130,6 +128,6 @@ function initSliderEditor() {
   });
 
   effectsListElement.addEventListener('change', onChangeSliderStatus);
-}
+};
 
-export { initSliderEditor };
+export { initSliderEditor , resetFilter};

@@ -51,7 +51,6 @@ const showErrorFileMessage = (message) => {
 const isEscapeKey = (evt) => evt.type === 'keydown' && evt.key === 'Escape';
 const isEnter = (evt) => evt.type === 'keydown' && evt.key === 'Enter';
 
-
 // Функция взята из интернета и доработана
 // Источник - https://www.freecodecamp.org/news/javascript-debounce-example
 

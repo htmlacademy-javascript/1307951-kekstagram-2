@@ -23,12 +23,6 @@ const showFilters = () => {
   }
 };
 
-const hideFilters = () => {
-  if (!imgFiltersElement.classList.contains('img-filters--inactive')) {
-    imgFiltersElement.classList.add('img-filters--inactive');
-  }
-};
-
 const setDefaultClick = (cb) => {
   filterDefaultButtonElement.addEventListener('pointerdown', (evt) => {
     unsetButtons();
@@ -53,4 +47,4 @@ const setDiscussedClick = (cb) => {
   });
 };
 
-export{showFilters, hideFilters, setRundomClick, setDefaultClick, setDiscussedClick, getActiveButton};
+export{showFilters, setRundomClick, setDefaultClick, setDiscussedClick, getActiveButton};

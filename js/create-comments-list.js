@@ -30,13 +30,13 @@ const createCommentListFragment = (comments) => {
   return socialCommentFragment;
 };
 
-const addMoreComments = (evt) => {
+const onCommentsLoaderButtonPointerdown = (evt) => {
   evt.preventDefault();
   getNewComments();
 };
 
 const clearCommentsEvent = () => {
-  socialCommentsLoader.removeEventListener('pointerdown', addMoreComments);
+  socialCommentsLoader.removeEventListener('pointerdown', onCommentsLoaderButtonPointerdown);
 };
 
 const addCommentAssistent = (allCommentsArray) => {
@@ -61,7 +61,7 @@ const addCommentAssistent = (allCommentsArray) => {
 
 
 const addCommentsEvent = () =>{
-  socialCommentsLoader.addEventListener('pointerdown', addMoreComments);
+  socialCommentsLoader.addEventListener('pointerdown', onCommentsLoaderButtonPointerdown);
 };
 
 const createCommentList = (comments) => {

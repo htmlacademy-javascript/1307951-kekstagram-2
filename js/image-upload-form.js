@@ -1,8 +1,9 @@
-import { isHashtagValid, error } from './check-hashtag-input.js';
-import { isDescriptionValid, error as descError } from './check-description-input.js';
-import { isEscapeKey, isEnter, showErrorMessage, showSuccessMessage, showErrorFileMessage } from './utils.js';
+import { isHashtagValid, showHashtagError } from './check-hashtag-input.js';
+import { isDescriptionValid, showDescriptionError } from './check-description-input.js';
+import { isEscapeKey, isEnter, showSuccessMessage, showErrorFileMessage } from './utils.js';
 import { initSliderEditor, resetFilter } from './slider-editor.js';
 import { sendData } from './server.js';
+import { successMessageHandler, failedFileLoadHandler } from './modal-windows.js';
 
 const IMG_SCALE_STEP = 25;
 const IMG_DEFAULT_VALUE = 100;
@@ -37,14 +38,13 @@ const resetPhotoScale = () => {
   imgUploadPreviewImgElement.setAttribute('style', `transform: scale(${IMG_DEFAULT_VALUE / 100});`);
 };
 
+
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     // если фокус на инпутах
     if (document.activeElement === textHashtagsInputElement || document.activeElement === textDescriptionElement) {
       evt.stopPropagation();
-    } else {
-      resetFromEditor();
     }
   }
 
@@ -54,6 +54,7 @@ const onDocumentKeydown = (evt) => {
       resetFromEditor();
     }
   }
+
 };
 
 const onImgUploadFileClose = (evt) => {
@@ -92,29 +93,6 @@ const onImgUploadFileOpen = (evt) => {
   }
 };
 
-
-const onCloseSuccessMsg = (closeButton) => {
-  const deleteSuccessModalWindowElement = document.querySelector('.success');
-  closeButton.removeEventListener('pointerdown', onCloseSuccessMsg);
-  deleteSuccessModalWindowElement.remove();
-};
-
-const successMessageHandler = () => {
-  const successButtonElement = document.querySelector('.success__button');
-  successButtonElement.addEventListener('pointerdown', () => onCloseSuccessMsg(successButtonElement));
-};
-
-const onCloseErrorFileMsg = (closeButton) => {
-  const deleteErrorModalWindowElement = document.querySelector('.error');
-  closeButton.removeEventListener('pointerdown', onCloseErrorFileMsg);
-  deleteErrorModalWindowElement.remove();
-};
-
-const failedFileLoadHandler = () => {
-  const errorButtonElement = document.querySelector('.error__button');
-  errorButtonElement.addEventListener('pointerdown', () => onCloseErrorFileMsg(errorButtonElement));
-};
-
 const blockSubmitButton = () => {
   imageUploadSubmitButton.disabled = true;
   imageUploadSubmitButton.textContent = 'Сохраняю ...';
@@ -125,9 +103,9 @@ const unblockSubmitButton = () => {
   imageUploadSubmitButton.textContent = 'Сохранить';
 };
 
-const onFormSubmit = (pristineArray, evt) => {
+const onFormSubmit = (pristineInstances, evt) => {
   evt.preventDefault();
-  const isAnyError = pristineArray.every((pristine) => pristine.validate());
+  const isAnyError = pristineInstances.every((pristine) => pristine.validate());
 
   if (isAnyError) {
     blockSubmitButton();
@@ -139,14 +117,12 @@ const onFormSubmit = (pristineArray, evt) => {
         showSuccessMessage();
         successMessageHandler();
         unblockSubmitButton();
+        resetFromEditor();
       },
       (msg) => {
         showErrorFileMessage(msg);
         failedFileLoadHandler();
         unblockSubmitButton();
-      },
-      () => {
-        resetFromEditor();
       },
       new FormData(evt.target),
     );
@@ -154,26 +130,21 @@ const onFormSubmit = (pristineArray, evt) => {
 };
 
 const onChangeScaleControlValue = (evt) => {
-  try {
-    let currentValue = parseInt(scaleControlValueElement.value, 10);
+  let currentValue = parseInt(scaleControlValueElement.value, 10);
 
-    if (evt.target.classList.contains('scale__control--smaller')) {
-      currentValue -= IMG_SCALE_STEP;
-      currentValue = currentValue < 25 ? 25 : currentValue;
-    }
-
-    if (evt.target.classList.contains('scale__control--bigger')) {
-      currentValue += IMG_SCALE_STEP;
-      currentValue = currentValue > 100 ? 100 : currentValue;
-    }
-
-    scaleControlValueElement.setAttribute('value', `${currentValue}%`);
-    imgUploadPreviewImgElement.setAttribute('style', `transform: scale(${currentValue / 100});`);
-
-    // eslint-disable-next-line no-shadow
-  } catch (error) {
-    showErrorMessage(error.message);
+  if (evt.target.classList.contains('scale__control--smaller')) {
+    currentValue -= IMG_SCALE_STEP;
+    currentValue = currentValue < 25 ? 25 : currentValue;
   }
+
+  if (evt.target.classList.contains('scale__control--bigger')) {
+    currentValue += IMG_SCALE_STEP;
+    currentValue = currentValue > 100 ? 100 : currentValue;
+  }
+
+  scaleControlValueElement.setAttribute('value', `${currentValue}%`);
+  imgUploadPreviewImgElement.setAttribute('style', `transform: scale(${currentValue / 100});`);
+
 };
 
 // запуск события на отправку формы и прописание правил для инпутов Пристин
@@ -187,10 +158,10 @@ const initPristineFormValidation = () => {
   };
 
   const pristineHashTag = new Pristine(imgUploadFieldWrapperHashElement, defaultConfig);
-  pristineHashTag.addValidator(textHashtagsInputElement, isHashtagValid, error, 1, false);
+  pristineHashTag.addValidator(textHashtagsInputElement, isHashtagValid, showHashtagError, 1, false);
 
   const pristineDescription = new Pristine(imgUploadFieldWrapperDescElement, defaultConfig);
-  pristineDescription.addValidator(textDescriptionElement, isDescriptionValid, descError, 1, false);
+  pristineDescription.addValidator(textDescriptionElement, isDescriptionValid, showDescriptionError, 1, false);
 
   imgUploadFormElement.addEventListener('submit', (evt) => {
     onFormSubmit([pristineHashTag, pristineDescription], evt);

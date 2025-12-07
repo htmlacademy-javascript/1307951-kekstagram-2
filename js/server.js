@@ -5,7 +5,7 @@ const Method = {
 
 const Url = {
   GET: 'https://31.javascript.htmlacademy.pro/kekstagram/data',
-  POST: 'https://31.javascript.htmlacademy.pro/kekstagram'
+  POST: 'https://31.javascript.htmlacademy.pro/kekstagram1'
 };
 
 const ErrorText = {
@@ -24,7 +24,7 @@ const getData = (onSuccess, onFail) => {
     });
 };
 
-const sendData = (onSuccess, onFail, onFinally, body) => {
+const sendData = (onSuccess, onFail, body) => {
   fetch(Url.POST, { method: Method.POST, body })
     .then((response) => {
       if (response.ok) {
@@ -35,9 +35,6 @@ const sendData = (onSuccess, onFail, onFinally, body) => {
     })
     .catch(() => {
       onFail(ErrorText[Method.POST]);
-    })
-    .finally(()=> {
-      onFinally();
     });
 };
 

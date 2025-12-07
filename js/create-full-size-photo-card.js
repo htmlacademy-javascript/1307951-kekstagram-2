@@ -15,7 +15,7 @@ const createPhotoCard = ({id: pictureId, url, description, likes, comments}) => 
   createCommentList(comments);
 };
 
-const beforeClosePhotoCard = () => {
+const beforeClosePhotoCardActions = () => {
   bigPictureElement.classList.add('hidden');
   socialCommentCountElement.classList.remove('hidden');
   socialCommentLoaderElement.classList.remove('hidden');
@@ -28,4 +28,4 @@ const renderPhotoCard = (picture) => {
   bodyElement.classList.add('modal-open');
 };
 
-export {renderPhotoCard, beforeClosePhotoCard};
+export {renderPhotoCard, beforeClosePhotoCardActions};

@@ -1,6 +1,6 @@
 const DESCRIPTION_MAX_LENGTH = 140;
 let errorMessage = '';
-const error = () => errorMessage;
+const showDescriptionError = () => errorMessage;
 
 const isDescriptionValid = (descriptionString) => {
   errorMessage = '';
@@ -12,4 +12,4 @@ const isDescriptionValid = (descriptionString) => {
   return true;
 };
 
-export { isDescriptionValid, error };
+export { isDescriptionValid, showDescriptionError };

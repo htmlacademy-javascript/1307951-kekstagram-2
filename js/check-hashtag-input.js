@@ -34,7 +34,7 @@ const checkHashTagRules = (inputHashtag) => {
   });
 };
 
-const error = () => errorMessage;
+const showHashtagError = () => errorMessage;
 
 /**
  * @param {inputHashTagsArray} массив с хэштегами
@@ -57,18 +57,18 @@ const checkHashTagsNumbers = (inputHashTagsString, search) => search.length ? (i
  * @param {String} inputArray строка ввода формы с хэштегом
  * @returns {Boolean} возвращает true, если ошибок нет, и false - если есть
  */
-const isHashtagValid = (inputArray) => {
+const isHashtagValid = (charsOfInputString) => {
   errorMessage = '';
-  const inputArrayString = inputArray.trim().toLowerCase();
+  const inputChars = charsOfInputString.trim().toLowerCase();
 
-  if (inputArrayString) {
-    const inputHashTagsArray = inputArrayString.split(' ');
+  if (inputChars) {
+    const inputHashTagsArray = inputChars.split(' ');
     if (inputHashTagsArray.length > 1) {
       if (checkHashTagsClones(inputHashTagsArray)) {
         errorMessage += 'Oдин и тот же хэштег не может быть использован дважды';
         return false;
       }
-      if (checkHashTagsNumbers(inputArrayString, '#')) {
+      if (checkHashTagsNumbers(inputChars, '#')) {
         errorMessage += 'Нельзя указать больше пяти хэштегов';
         return false;
       }
@@ -78,4 +78,4 @@ const isHashtagValid = (inputArray) => {
   return true;
 };
 
-export { isHashtagValid, error };
+export { isHashtagValid, showHashtagError };

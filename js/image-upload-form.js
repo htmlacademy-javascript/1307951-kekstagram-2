@@ -1,6 +1,6 @@
-import {isHashtagValid, error} from './check-hashtag-input.js';
+import { isHashtagValid, error } from './check-hashtag-input.js';
 import { isDescriptionValid, error as descError } from './check-description-input.js';
-import { isEscapeKey, isEnter, showErrorMessage, showSuccessMessage } from './utils.js';
+import { isEscapeKey, isEnter, showErrorMessage, showSuccessMessage, showErrorFileMessage } from './utils.js';
 import { initSliderEditor, resetFilter } from './slider-editor.js';
 import { sendData } from './server.js';
 
@@ -23,6 +23,7 @@ const scaleControleSmallerElement = imgUploadFormElement.querySelector('.scale__
 const scaleControleBiggerElement = imgUploadFormElement.querySelector('.scale__control--bigger');
 const scaleControlValueElement = imgUploadFormElement.querySelector('.scale__control--value');
 const imgUploadPreviewImgElement = imgUploadFormElement.querySelector('.img-upload__preview img');
+const effectsPreviewElements = imgUploadFormElement.querySelectorAll('.effects__preview');
 
 const imageUploadSubmitButton = imgUploadFormElement.querySelector('.img-upload__submit');
 
@@ -37,33 +38,33 @@ const resetPhotoScale = () => {
 };
 
 const onDocumentKeydown = (evt) => {
-  if(isEscapeKey(evt)) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     // если фокус на инпутах
-    if(document.activeElement === textHashtagsInputElement || document.activeElement === textDescriptionElement) {
+    if (document.activeElement === textHashtagsInputElement || document.activeElement === textDescriptionElement) {
       evt.stopPropagation();
     } else {
       resetFromEditor();
     }
   }
 
-  if(isEnter(evt)) {
+  if (isEnter(evt)) {
     evt.preventDefault();
-    if(document.activeElement === imgUploadCancelElement) {
+    if (document.activeElement === imgUploadCancelElement) {
       resetFromEditor();
     }
   }
 };
 
 const onImgUploadFileClose = (evt) => {
-  if(evt.type === 'pointerdown'){
+  if (evt.type === 'pointerdown') {
     evt.preventDefault();
     resetFromEditor();
   }
 };
 
 
-function resetFromEditor () {
+function resetFromEditor() {
   changePhotoEditingWindowVisibility();
   imgUploadFormElement.reset();
   resetFilter();
@@ -80,12 +81,38 @@ const onImgUploadFileOpen = (evt) => {
 
     if (matches) {
       imgUploadPreviewImgElement.src = URL.createObjectURL(file);
+      Array.from(effectsPreviewElements).forEach((element) => {
+        element.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+      });
     }
 
     changePhotoEditingWindowVisibility();
     imgUploadCancelElement.addEventListener('pointerdown', onImgUploadFileClose);
     document.addEventListener('keydown', onDocumentKeydown);
   }
+};
+
+
+const onCloseSuccessMsg = (closeButton) => {
+  const deleteSuccessModalWindowElement = document.querySelector('.success');
+  closeButton.removeEventListener('pointerdown', onCloseSuccessMsg);
+  deleteSuccessModalWindowElement.remove();
+};
+
+const successMessageHandler = () => {
+  const successButtonElement = document.querySelector('.success__button');
+  successButtonElement.addEventListener('pointerdown', () => onCloseSuccessMsg(successButtonElement));
+};
+
+const onCloseErrorFileMsg = (closeButton) => {
+  const deleteErrorModalWindowElement = document.querySelector('.error');
+  closeButton.removeEventListener('pointerdown', onCloseErrorFileMsg);
+  deleteErrorModalWindowElement.remove();
+};
+
+const failedFileLoadHandler = () => {
+  const errorButtonElement = document.querySelector('.error__button');
+  errorButtonElement.addEventListener('pointerdown', () => onCloseErrorFileMsg(errorButtonElement));
 };
 
 const blockSubmitButton = () => {
@@ -110,10 +137,12 @@ const onFormSubmit = (pristineArray, evt) => {
     sendData(
       () => {
         showSuccessMessage();
+        successMessageHandler();
         unblockSubmitButton();
       },
       (msg) => {
-        showErrorMessage(msg);
+        showErrorFileMessage(msg);
+        failedFileLoadHandler();
         unblockSubmitButton();
       },
       () => {
@@ -141,7 +170,7 @@ const onChangeScaleControlValue = (evt) => {
     scaleControlValueElement.setAttribute('value', `${currentValue}%`);
     imgUploadPreviewImgElement.setAttribute('style', `transform: scale(${currentValue / 100});`);
 
-  // eslint-disable-next-line no-shadow
+    // eslint-disable-next-line no-shadow
   } catch (error) {
     showErrorMessage(error.message);
   }
@@ -161,7 +190,7 @@ const initPristineFormValidation = () => {
   pristineHashTag.addValidator(textHashtagsInputElement, isHashtagValid, error, 1, false);
 
   const pristineDescription = new Pristine(imgUploadFieldWrapperDescElement, defaultConfig);
-  pristineDescription.addValidator(textDescriptionElement, isDescriptionValid, descError, 1 , false);
+  pristineDescription.addValidator(textDescriptionElement, isDescriptionValid, descError, 1, false);
 
   imgUploadFormElement.addEventListener('submit', (evt) => {
     onFormSubmit([pristineHashTag, pristineDescription], evt);

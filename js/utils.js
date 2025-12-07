@@ -4,7 +4,7 @@ const errorDataLoadTemplate = document.getElementById('data-error').content;
 const errorDataLoadMessageElement = errorDataLoadTemplate.querySelector('.data-error__title');
 const successSendDataTemplate = document.getElementById('success').content;
 const errorFileLoadTemplate = document.getElementById('error').content;
-const errorFileLoadMessage = errorFileLoadTemplate.querySelector('error__title');
+const errorFileLoadMessage = errorFileLoadTemplate.querySelector('.error__title');
 
 /**
  * возвращает рандомное число от @param {number} min до @param {number} max
@@ -46,7 +46,7 @@ const showErrorFileMessage = (message) => {
   }
 
   body.append(errorArea);
-  const errorAreaContainer = body.querySelector('.success__title');
+  const errorAreaContainer = body.querySelector('.error');
 
   setTimeout(() => {
     errorAreaContainer.remove();

@@ -10,7 +10,7 @@ const Url = {
 
 const ErrorText = {
   [Method.GET] : 'Не удалось получить данные. Попробуйте еще раз.',
-  [Method.POST]: 'Не удалось отправить форму. Попробуйте еще раз.',
+  [Method.POST]: 'Не удалось отправить форму.',
 };
 
 const getData = (onSuccess, onFail) => {

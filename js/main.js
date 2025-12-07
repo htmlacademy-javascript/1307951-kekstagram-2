@@ -29,7 +29,7 @@ getData((data) => {
 }, showErrorMessage);
 
 showFilters();
-// создали маленькие картинки с dataset.pictureId
+
 setPictureModalWindowHandler();
 
 initUploadFormHandler();

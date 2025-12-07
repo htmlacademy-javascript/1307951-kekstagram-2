@@ -38,7 +38,6 @@ const resetPhotoScale = () => {
   imgUploadPreviewImgElement.setAttribute('style', `transform: scale(${IMG_DEFAULT_VALUE / 100});`);
 };
 
-
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();

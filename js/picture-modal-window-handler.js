@@ -1,4 +1,4 @@
-import { renderPhotoCard, beforeClosePhotoCardActions } from './create-full-size-photo-card.js';
+import { renderPhotoCard, changeToInitialStateOfClassNames } from './create-full-size-photo-card.js';
 import { clearCommentsEvent } from './create-comments-list.js';
 import { getPhotos } from './data.js';
 
@@ -10,7 +10,7 @@ const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel
 const onBigPictureClose = (evt) => {
   evt.preventDefault();
   if ((evt.type === 'keydown' & evt.key === 'Escape') || (evt.type === 'pointerdown')) {
-    beforeClosePhotoCardActions();
+    changeToInitialStateOfClassNames();
     document.removeEventListener('keydown', onBigPictureClose);
     closeButtonElement.removeEventListener('pointerdown', onBigPictureClose);
     clearCommentsEvent();

@@ -1,21 +1,59 @@
-const elementsToCloseModalCheck = (evt, modalClass) => {
-  const modalWindow = document.querySelector(`.${modalClass}`);
+const MESSAGE_CONTAINER_CLASSES = ['error', 'success'];
+
+const onCloseSuccessMsg = (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+
+  const modalWindow = document.querySelector('.success');
+  const successButtonElement = document.querySelector('.success__button');
+
   if (evt.key === 'Escape') {
-    if(modalWindow) {
+    if (modalWindow) {
+      successButtonElement.removeEventListener('pointerdown', onCloseSuccessMsg);
+      document.removeEventListener('keydown', onCloseSuccessMsg);
+      document.removeEventListener('pointerdown', onCloseSuccessMsg);
       modalWindow.remove();
     }
   }
 
-  if(evt.type === 'pointerdown') {
+  if (evt.type === 'pointerdown') {
     evt.stopPropagation();
-    if((evt.target.className === modalClass) || (evt.target.className === `${modalClass}__button`)){
+    if ((evt.target.className === 'success') || (evt.target.className === 'success__button')) {
+      successButtonElement.removeEventListener('pointerdown', onCloseSuccessMsg);
+      document.removeEventListener('keydown', onCloseSuccessMsg);
+      document.removeEventListener('pointerdown', onCloseSuccessMsg);
       modalWindow.remove();
     }
   }
 };
 
-const onCloseSuccessMsg = (evt) => {
-  elementsToCloseModalCheck(evt, 'success');
+const onCloseErrorMessage = (evt) => {
+  evt.preventDefault();
+  evt.stopPropagation();
+  const errorButtonElement = document.querySelector('.error__button');
+  const errorWindow = document.querySelector('.error');
+
+  if (evt.key === 'Escape') {
+    if (errorWindow) {
+
+      errorButtonElement.removeEventListener('pointerdown', onCloseErrorMessage);
+      document.removeEventListener('keydown', onCloseErrorMessage);
+      document.removeEventListener('pointerdown', onCloseErrorMessage);
+      errorWindow.remove();
+    }
+  }
+
+  if (evt.type === 'pointerdown') {
+    evt.stopPropagation();
+    if ((evt.target.className === 'error') || (evt.target.className === 'error__button')) {
+
+      errorButtonElement.removeEventListener('pointerdown', onCloseErrorMessage);
+      document.removeEventListener('keydown', onCloseErrorMessage);
+      document.removeEventListener('pointerdown', onCloseErrorMessage);
+      errorWindow.remove();
+    }
+  }
+
 };
 
 const successMessageHandler = () => {
@@ -25,10 +63,6 @@ const successMessageHandler = () => {
   document.addEventListener('pointerdown', onCloseSuccessMsg);
 };
 
-const onCloseErrorMessage = (evt) => {
-  elementsToCloseModalCheck(evt, 'error');
-};
-
 const failedFileLoadHandler = () => {
   const errorButtonElement = document.querySelector('.error__button');
   errorButtonElement.addEventListener('pointerdown', onCloseErrorMessage);
@@ -36,4 +70,4 @@ const failedFileLoadHandler = () => {
   document.addEventListener('pointerdown', onCloseErrorMessage);
 };
 
-export {successMessageHandler, failedFileLoadHandler};
+export {successMessageHandler, failedFileLoadHandler, MESSAGE_CONTAINER_CLASSES};

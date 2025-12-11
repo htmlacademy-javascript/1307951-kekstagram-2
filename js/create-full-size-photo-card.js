@@ -7,15 +7,19 @@ const socialLikesCoutnElement = bigPictureElement.querySelector('.likes-count');
 const socialCommentCountElement = bigPictureElement.querySelector('.social__comment-count');
 const socialCommentLoaderElement = bigPictureElement.querySelector('.comments-loader');
 
+const socialCaptionElement = bigPictureElement.querySelector('.social__caption');
+
 const createPhotoCard = ({id: pictureId, url, description, likes, comments}) => {
   bigPictureElement.dataset.pictureId = pictureId;
   imageElement.src = url;
   imageElement.alt = description;
   socialLikesCoutnElement.textContent = likes;
+  socialCaptionElement.textContent = description;
+
   createCommentList(comments);
 };
 
-const beforeClosePhotoCardActions = () => {
+const changeToInitialStateOfClassNames = () => {
   bigPictureElement.classList.add('hidden');
   socialCommentCountElement.classList.remove('hidden');
   socialCommentLoaderElement.classList.remove('hidden');
@@ -28,4 +32,4 @@ const renderPhotoCard = (picture) => {
   bodyElement.classList.add('modal-open');
 };
 
-export {renderPhotoCard, beforeClosePhotoCardActions};
+export {renderPhotoCard, changeToInitialStateOfClassNames};

@@ -5,7 +5,7 @@ const Method = {
 
 const Url = {
   GET: 'https://31.javascript.htmlacademy.pro/kekstagram/data',
-  POST: 'https://31.javascript.htmlacademy.pro/kekstagram1'
+  POST: 'https://31.javascript.htmlacademy.pro/kekstagram'
 };
 
 const ErrorText = {

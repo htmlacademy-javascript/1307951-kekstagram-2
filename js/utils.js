@@ -6,7 +6,6 @@ const successSendDataTemplate = document.getElementById('success').content;
 const errorFileLoadTemplate = document.getElementById('error').content;
 const errorFileLoadMessage = errorFileLoadTemplate.querySelector('.error__title');
 
-// сообщение о неудачной загрузке данных
 const showErrorMessage = (message) => {
   const errorArea = errorDataLoadTemplate.cloneNode(true);
 
@@ -23,13 +22,11 @@ const showErrorMessage = (message) => {
   }, REMOVE_MESSAGE_TIMEOUT);
 };
 
-// сообщение о положительной отправке формы
 const showSuccessMessage = () => {
   const successArea = successSendDataTemplate.cloneNode(true);
   body.append(successArea);
 };
 
-// сообщение о неудачной отправке формы
 const showErrorFileMessage = (message) => {
   const errorArea = errorFileLoadTemplate.cloneNode(true);
   if (message) {

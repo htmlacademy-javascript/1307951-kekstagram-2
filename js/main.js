@@ -31,7 +31,5 @@ getData((data) => {
   showFilters();
 }, showErrorMessage);
 
-// обработчики для маленьких иконок
 setPictureModalWindowHandler();
-// обработчик для загрузки фото
 initUploadFormHandler();

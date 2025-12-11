@@ -6,7 +6,6 @@ const sliderContainerElement = imgUploadOverlayElement.querySelector('.img-uploa
 const imageUploadPreviewElement = imgUploadOverlayElement.querySelector('.img-upload__preview img');
 const effectsListElement = imgUploadOverlayElement.querySelector('.effects__list');
 
-/** const values */
 const sliderEffectChromeOption = {
   range: {
     min: 0,
@@ -16,10 +15,8 @@ const sliderEffectChromeOption = {
   step: 0.1,
   format: {
     to: function (value) {
-      // то значение, которое получаетс слайдер set()
       return value;
     },
-    // то значение, которое слайдер передает get()
     from: function (value) {
       return parseFloat(value).toFixed(1);
     }
@@ -35,10 +32,8 @@ const sliderEffectSepiaOption = {
   step: 0.1,
   format: {
     to: function (value) {
-      // то значение, которое получаетс слайдер set()
       return value;
     },
-    // то значение, которое слайдер передает get()
     from: function (value) {
       return parseFloat(value).toFixed(1);
     }
@@ -63,10 +58,8 @@ const sliderEffectPhobosOption = {
   step: 0.1,
   format: {
     to: function (value) {
-      // то значение, которое получаетс слайдер set()
       return value;
     },
-    // то значение, которое слайдер передает get()
     from: function (value) {
       return parseFloat(value).toFixed(1);
     }
@@ -82,10 +75,8 @@ const sliderEffectHeatOption = {
   step: 0.1,
   format: {
     to: function (value) {
-      // то значение, которое получаетс слайдер set()
       return value;
     },
-    // то значение, которое слайдер передает get()
     from: function (value) {
       return parseFloat(value).toFixed(1);
     }

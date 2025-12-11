@@ -41,8 +41,9 @@ const showHashtagError = () => errorMessage;
  * @return {boolean} true если есть повторения хэштегов
 */
 const checkHashTagsClones = (inputHashTagsArray) => {
-  const arrayWithoutHashTagClones = inputHashTagsArray.filter((item, index) => inputHashTagsArray.indexOf(item) === index);
-  const isAnyClones = (arrayWithoutHashTagClones.length !== inputHashTagsArray.length);
+  const arrayWithoutSpaces = inputHashTagsArray.filter((item) => item !== '');
+  const arrayWithoutHashTagClones = arrayWithoutSpaces.filter((item, index) => arrayWithoutSpaces.indexOf(item) === index);
+  const isAnyClones = (arrayWithoutHashTagClones.length !== arrayWithoutSpaces.length);
   return isAnyClones;
 };
 
@@ -59,8 +60,7 @@ const checkHashTagsNumbers = (inputHashTagsString, search) => search.length ? (i
  */
 const isHashtagValid = (charsOfInputString) => {
   errorMessage = '';
-  const inputChars = charsOfInputString.trim().toLowerCase();
-
+  const inputChars = charsOfInputString.trim().toLowerCase().replace(/ +/g, ' ');
   if (inputChars) {
     const inputHashTagsArray = inputChars.split(' ');
     if (inputHashTagsArray.length > 1) {

@@ -12,6 +12,7 @@ getData((data) => {
 
   renderThumbnails(data);
   savePhotos(data);
+
   setDefaultClick(debounce (
     ()=> renderThumbnails(data),
     RENDERER_DELAY,
@@ -26,10 +27,9 @@ getData((data) => {
     ()=> renderThumbnails(data),
     RENDERER_DELAY,
   ));
+
+  showFilters();
 }, showErrorMessage);
 
-showFilters();
-
 setPictureModalWindowHandler();
-
 initUploadFormHandler();

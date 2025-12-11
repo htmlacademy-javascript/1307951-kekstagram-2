@@ -1,22 +1,14 @@
 const SHOW_STEP = 5;
 const bigPictureElement = document.querySelector('.big-picture');
 const socialCommentTemplate = bigPictureElement.querySelector('.social__comment');
-// показывает, сколько элементов загружено
 const socialCommentShownCountElement = bigPictureElement.querySelector('.social__comment-shown-count');
-// показывает, сколькло элементов всего
 const socialCommentTotalCountElement = bigPictureElement.querySelector('.social__comment-total-count');
-// список, куда добавляются элементы комментариев
 const socialCommentsElement = bigPictureElement.querySelector('.social__comments');
-// кнопка загрузки комментариев
 const socialCommentsLoader = bigPictureElement.querySelector('.social__comments-loader');
 
-// фрагмент, куда добавляются комментарии загруженные
 const socialCommentFragment = document.createDocumentFragment();
 
 let getNewComments = 0;
-/** в этой функции передается обрезанный массив объектов
- * длиной shwo_step
- */
 
 const createCommentListFragment = (comments) => {
   comments.forEach(({id: commentId, avatar, message, name}) => {

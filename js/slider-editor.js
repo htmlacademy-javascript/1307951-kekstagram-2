@@ -3,17 +3,24 @@ const sliderElement = imgUploadOverlayElement.querySelector('.effect-level__slid
 const effectLevelValueInputElement = imgUploadOverlayElement.querySelector('.effect-level__value');
 const effectsItemsArray = imgUploadOverlayElement.querySelectorAll('.effects__item input');
 const sliderContainerElement = imgUploadOverlayElement.querySelector('.img-upload__effect-level');
-const imageUploadPreviewElement = imgUploadOverlayElement.querySelector('.img-upload__preview');
+const imageUploadPreviewElement = imgUploadOverlayElement.querySelector('.img-upload__preview img');
 const effectsListElement = imgUploadOverlayElement.querySelector('.effects__list');
 
-/** const values */
 const sliderEffectChromeOption = {
   range: {
     min: 0,
     max: 1
   },
   start: 1,
-  step: 0.1
+  step: 0.1,
+  format: {
+    to: function (value) {
+      return value;
+    },
+    from: function (value) {
+      return parseFloat(value).toFixed(1);
+    }
+  },
 };
 
 const sliderEffectSepiaOption = {
@@ -22,7 +29,15 @@ const sliderEffectSepiaOption = {
     max: 1
   },
   start: 1,
-  step: 0.1
+  step: 0.1,
+  format: {
+    to: function (value) {
+      return value;
+    },
+    from: function (value) {
+      return parseFloat(value).toFixed(1);
+    }
+  },
 };
 
 const sliderEffectMarvinOption = {
@@ -40,7 +55,15 @@ const sliderEffectPhobosOption = {
     max: 3
   },
   start: 3,
-  step: 0.1
+  step: 0.1,
+  format: {
+    to: function (value) {
+      return value;
+    },
+    from: function (value) {
+      return parseFloat(value).toFixed(1);
+    }
+  },
 };
 
 const sliderEffectHeatOption = {
@@ -49,7 +72,15 @@ const sliderEffectHeatOption = {
     max: 3
   },
   start: 3,
-  step: 0.1
+  step: 0.1,
+  format: {
+    to: function (value) {
+      return value;
+    },
+    from: function (value) {
+      return parseFloat(value).toFixed(1);
+    }
+  },
 };
 
 const Effects = {
@@ -85,6 +116,7 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
+effectLevelValueInputElement.value = 100;
 
 const onUpdateSliderOption = (effect) => {
   sliderElement.noUiSlider.updateOptions(Effects[effect]);
@@ -97,6 +129,7 @@ const resetFilter = () => {
 
 const onChangeSliderStatus = (evt) => {
   const pressedElement = evt.target;
+
   if (pressedElement.classList.contains('effects__radio')) {
     if (pressedElement.value !== 'none') {
       if (sliderContainerElement.classList.contains('hidden')) {
@@ -125,6 +158,7 @@ const initSliderEditor = () => {
         }
       }
     });
+
   });
 
   effectsListElement.addEventListener('change', onChangeSliderStatus);
